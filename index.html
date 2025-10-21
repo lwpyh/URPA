@@ -1,0 +1,322 @@
+<script src="http://www.google.com/jsapi" type="text/javascript"></script> 
+<script type="text/javascript">google.load("jquery", "1.3.2");</script>
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+
+<style type="text/css">
+	body {
+		font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; 
+		font-weight:300;
+		font-size:18px;
+		margin-left: auto;
+		margin-right: auto;
+		width: 1000px;
+	}	
+	h1 {
+		font-weight:300;
+	}
+	
+	.disclaimerbox {
+		background-color: #eee;		
+		border: 1px solid #eeeeee;
+		border-radius: 10px ;
+		-moz-border-radius: 10px ;
+		-webkit-border-radius: 10px ;
+		padding: 20px;
+	}
+
+	video.header-vid {
+		height: 140px;
+		border: 1px solid black;
+		border-radius: 10px ;
+		-moz-border-radius: 10px ;
+		-webkit-border-radius: 10px ;
+	}
+	
+	img.header-img {
+		height: 140px;
+		border: 1px solid black;
+		border-radius: 10px ;
+		-moz-border-radius: 10px ;
+		-webkit-border-radius: 10px ;
+	}
+	
+	img.rounded {
+		border: 0px solid #eeeeee;
+		border-radius: 10px ;
+		-moz-border-radius: 10px ;
+		-webkit-border-radius: 10px ;
+	}
+	
+	a:link,a:visited
+	{
+		color: #1367a7;
+		text-decoration: none;
+	}
+	a:hover {
+		color: #208799;
+	}
+	
+	td.dl-link {
+		height: 160px;
+		text-align: center;
+		font-size: 22px;
+	}
+	
+	.layered-paper-big { /* modified from: http://css-tricks.com/snippets/css/layered-paper/ */
+		box-shadow:
+		        0px 0px 1px 1px rgba(0,0,0,0.35), /* The top layer shadow */
+		        5px 5px 0 0px #fff, /* The second layer */
+		        5px 5px 1px 1px rgba(0,0,0,0.35), /* The second layer shadow */
+		        10px 10px 0 0px #fff, /* The third layer */
+		        10px 10px 1px 1px rgba(0,0,0,0.35), /* The third layer shadow */
+		        15px 15px 0 0px #fff, /* The fourth layer */
+		        15px 15px 1px 1px rgba(0,0,0,0.35), /* The fourth layer shadow */
+		        20px 20px 0 0px #fff, /* The fifth layer */
+		        20px 20px 1px 1px rgba(0,0,0,0.35), /* The fifth layer shadow */
+		        25px 25px 0 0px #fff, /* The fifth layer */
+		        25px 25px 1px 1px rgba(0,0,0,0.35); /* The fifth layer shadow */
+		margin-left: 10px;
+		margin-right: 45px;
+	}
+
+	.paper-big { /* modified from: http://css-tricks.com/snippets/css/layered-paper/ */
+		box-shadow:
+		        0px 0px 1px 1px rgba(0,0,0,0.35); /* The top layer shadow */
+
+		margin-left: 10px;
+		margin-right: 45px;
+	}
+
+
+	.layered-paper { /* modified from: http://css-tricks.com/snippets/css/layered-paper/ */
+		box-shadow:
+		        0px 0px 1px 1px rgba(0,0,0,0.35), /* The top layer shadow */
+		        5px 5px 0 0px #fff, /* The second layer */
+		        5px 5px 1px 1px rgba(0,0,0,0.35), /* The second layer shadow */
+		        10px 10px 0 0px #fff, /* The third layer */
+		        10px 10px 1px 1px rgba(0,0,0,0.35); /* The third layer shadow */
+		margin-top: 5px;
+		margin-left: 10px;
+		margin-right: 30px;
+		margin-bottom: 5px;
+	}
+	
+	.vert-cent {
+		position: relative;
+	    top: 50%;
+	    transform: translateY(-50%);
+	}
+	
+	hr
+	{
+		border: 0;
+		height: 1px;
+		background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));
+	}
+</style>
+
+<html>
+  <head>
+		<title>CoS: Chain-of-Shot Prompting for Long Video Understanding</title>
+		<meta property="og:image" content="https://richzhang.github.io/splitbrainauto/index_files/cvpr_fb_icon.png"/>
+		<meta property="og:title" content=". In NeurlPS, 2024." />
+  </head>
+
+	
+<body>
+    <br>
+          <center>
+          	<!-- <span style="font-size:34px">CoS: Chain-of-Shot Prompting for Long Video Understanding</span> -->
+          	<span style="font-size:34px">CoS: Chain-of-Shot Prompting for Long Video Understanding</span><br>
+		  <br>
+	  		  <table align=center width=800px>
+	  			  <tr>
+	  	              <td align=center width=100px>
+	  					<center>
+	  						<span style="font-size:20px"><a href="https://lwpyh.github.io/">Jian Hu</a></span>
+							</a><sup>1</sup></span>
+		  		  		</center>
+		  		  	  </td>
+	  	              <td align=center width=100px>
+	  					<center>
+	  						<span style="font-size:20px"><a href="https://zxccade.github.io/">Zixu Cheng</a></span>
+							</a><sup>1</sup></span>
+		  		  		</center>
+		  		  	  </td>
+	  	              <td align=center width=100px>
+	  					<center>
+	  						<span style="font-size:20px"><a href="https://chenyangsi.top/">Chenyang Si</a></span>
+							</a><sup>2</sup></span>
+		  		  		</center>
+		  		  	  </td>
+				<td align=center width=100px>
+	  					<center>
+	  						<span style="font-size:20px"><a href="https://weivision.github.io/">Wei Li</a></span>
+							</a><sup>2</sup></span>
+		  		  		</center>
+		  		  	  </td>
+				<td align=center width=100px>
+	  					<center>
+	  						<span style="font-size:20px"><a href="https://www.eecs.qmul.ac.uk/~sgg/">Shaogang Gong</a></span>
+							</a><sup>1</sup></span>
+		  		  		</center>
+		  		  	  </td>
+			  </table>
+          	<span style="font-size:20px"><sup>1</sup>CV Lab, Queen Mary University of London, <sup>2</sup>S-Lab, Nanyang Technological University</span><br>
+		  <span style="font-size:20px">{jian.hu, zixu.cheng, s.gong}@qmul.ac.uk, {chenyang.si, wei.l}@ntu.edu.sg</span>
+          	<!-- <span style="font-size:22px">In CVPR, 2017.</span><br> -->
+          		<!-- <span style="font-size:30px">ECCV 2016.</span> -->
+
+	  		  <table align=center width=400px>
+	  			  <tr>
+	  	              <td align=center width=300px>
+	  					<center>
+	  						<span style="font-size:20px"><a href='https://github.com/lwpyh/CoS_codes'> Code [GitHub]</a></span>
+		  		  		</center>
+		  		  	  </td>
+	  	              <td align=center width=300px>
+	  					<center>
+	  						<span style="font-size:20px"><a href='https://arxiv.org/abs/2502.06428'> ArXiV [Paper]</a></span>
+		  		  		</center>
+		  		  	  </td>
+			  </table>
+          </center>
+  		  <br>
+
+	<table align=center width=800px>
+  			  <tr>
+  	              <td width=400px>
+  					<center>
+  	                	<img class="rounded" src = "motivation_show.png" height="320px"></img>
+  	                	<br>
+						<figcaption>Motivation: The critical problem of how to select shots in video understanding. 
+   In a video that depicts how a boy gradually gains a dragon's trust,
+   different sampling methods create two distinct narratives: split
+   video A shows the boy being attacked by the dragon, while split
+   video B shows him happily sharing food with the dragon. 
+  This shows that minor differences in video sampling leads to significant variations in semantic understanding.</figcaption>
+					</center>
+  	              </td>
+                </tr>
+  	              <td width=400px>
+  					</center>
+  	              </td>
+  		  </table>
+
+  		  <br>
+            	  <hr>
+<table align=center width=900px>
+ <center><h1>Abstract</h1></center>
+	<div align="justify">
+	<p>
+Multi-modal Large Language Models (MLLMs) struggle with long videos due to the need for excessive visual tokens. These tokens exceed massively the context length of MLLMs, resulting in filled by redundant task-irrelevant shots. How to select shots is an unsolved critical problem: sparse sampling risks missing key details, while exhaustive sampling overwhelms the model with irrelevant content, leading to video misunderstanding. To solve this problem, we propose \textbf{C}hain-\textbf{o}f-\textbf{S}hot prompting (\textbf{CoS}). The key idea is to frame shot selection as test-time visual prompt optimisation, choosing shots adaptive to video understanding semantic task by optimising shots-task alignment. CoS has two key parts: (1) a binary video summary mechanism that performs pseudo temporal grounding, discovering a binary coding to identify task-relevant shots, and (2) a video co-reasoning module that deploys the binary coding to pair (learning to align) task-relevant positive shots with irrelevant negative shots. It embeds the optimised shot selections into the original video, facilitating a focus on relevant context to optimize long video understanding. Experiments across three baselines and five datasets demonstrate the effectiveness of CoS.</p>
+		</div>
+<br>
+<hr>
+<!-- <hr> -->
+<!-- <center><h1>Video</h1></center> -->
+     <!-- <center>
+     <iframe width="560" height="315" src="https://www.youtube.com/embed/oMcd6maQgQk" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+     </center> -->
+<!-- <br> -->
+
+<center><h1>Framework</h1></center>
+<table align="center" width="800px">
+    <tr>
+        <td width="400px">
+            <center>
+                <figure>
+                    <img class="rounded" src="frame_CoS.png" height="260px" />
+                    <figcaption style="text-align: justify;">
+                            The overall framework of CoS. It first utilises LLaVA to
+                            perform a mosaicing binary coding to bootstrap video
+                            summarisation for temporal grounding on a long video. Specifically, every
+                            four shots are aggregated into a mosaicing composition image. LLaVA
+                            determines whether task-related elements exist within each
+                            composition image by encoding a binary value of 1 or 0 (<code>'yes'</code>
+                            or <code>'no'</code>),
+                            thereby identifying sparsely distributed task-related shots to
+                            achieve pseudo temporal grounding. Given this binary video
+                            summary, task-related positive shots  \( S^p \) and irrelevant negative shots \( S^n \)
+                            are generated and represented by binary codes. \( S^p \), \( S^n \) and the original frame sequence \( X \)
+                            sampled from original video \( V \) are then fed into the MLLM for co-reasoning,
+                            minimising interference of irrelevant video content.
+</figcaption>
+                </figure>
+        <td width="400px">
+        </td>
+    </tr>
+</table>
+<hr>
+<table align="center" width="1700px">
+
+<center><h1>Experiments</h1></center>
+<table align="center" width="800px style="margin-bottom: -10px;">
+    <tr>
+        <td width="400px">
+            <center>
+                <figure>
+			<figcaption style="text-align: justify;">
+				
+    </figcaption>
+		    <img class="rounded" src="videomme.png" height="600px" />
+                </figure>
+        <td width="400px">
+        </td>
+    </tr>
+</table>
+  <hr>
+<table align="center" width="2800px">
+
+<center><h1>Qualitative Evaluation</h1></center>
+	<table align=center width="800px style="margin-bottom: 10px;">
+  			  <tr>
+  	              <td width=400px>
+  					<center>
+  	                	<img class="rounded" src = "image_sample.png" height="500px"></img>
+  	                	<br>
+					</center>
+  	              </td>
+                </tr>
+  	              <td width=400px>
+  					</center>
+  	              </td>
+  		  </table>
+
+  		  <br>
+            	  <hr>
+<table align=center width=1900px>
+
+<!--BibTex citation -->
+  <section class="section" id="BibTeX">
+    <div class="container is-max-desktop content">
+      <h2 class="title">BibTeX</h2>
+      <pre><code>@article{hu2025cos,
+  title={CoS: Chain-of-Shot Prompting for Long Video Understanding},
+  author={Hu, Jian and Cheng, Zixu and Si, Chenyang and Li, Wei and Gong, Shaogang},
+  journal={arXiv preprint arXiv:2502.06428},
+  year={2025}
+}</code></pre>
+    </div>
+</section>
+<!--End BibTex citation -->
+<footer class="footer">
+  <div class="container">
+    <div class="columns is-centered">
+      <div class="column is-8">
+        <div class="content">
+
+          <p>
+           
+          </p>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+	
+</body>
+</html>
