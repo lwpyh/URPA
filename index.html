@@ -119,7 +119,7 @@
 
 <html>
   <head>
-		<title>CoS: Chain-of-Shot Prompting for Long Video Understanding</title>
+		<title>Uncertainty-quantified Rollout Policy Adaptation for Unlabelled Cross-domain Temporal Grounding</title>
 		<meta property="og:image" content="https://richzhang.github.io/splitbrainauto/index_files/cvpr_fb_icon.png"/>
 		<meta property="og:title" content=". In NeurlPS, 2024." />
   </head>
@@ -128,8 +128,8 @@
 <body>
     <br>
           <center>
-          	<!-- <span style="font-size:34px">CoS: Chain-of-Shot Prompting for Long Video Understanding</span> -->
-          	<span style="font-size:34px">CoS: Chain-of-Shot Prompting for Long Video Understanding</span><br>
+          	<!-- <span style="font-size:34px">Uncertainty-quantified Rollout Policy Adaptation for Unlabelled Cross-domain Temporal Grounding</span> -->
+          	<span style="font-size:34px">Uncertainty-quantified Rollout Policy Adaptation for Unlabelled Cross-domain Temporal Grounding</span><br>
 		  <br>
 	  		  <table align=center width=800px>
 	  			  <tr>
@@ -147,25 +147,37 @@
 		  		  	  </td>
 	  	              <td align=center width=100px>
 	  					<center>
-	  						<span style="font-size:20px"><a href="https://chenyangsi.top/">Chenyang Si</a></span>
-							</a><sup>2</sup></span>
-		  		  		</center>
-		  		  	  </td>
-				<td align=center width=100px>
-	  					<center>
-	  						<span style="font-size:20px"><a href="https://weivision.github.io/">Wei Li</a></span>
-							</a><sup>2</sup></span>
-		  		  		</center>
-		  		  	  </td>
-				<td align=center width=100px>
-	  					<center>
 	  						<span style="font-size:20px"><a href="https://www.eecs.qmul.ac.uk/~sgg/">Shaogang Gong</a></span>
+							</a><sup>2</sup></span>
+		  		  		</center>
+		  		  	  </td>
+				<td align=center width=100px>
+	  					<center>
+	  						<span style="font-size:20px"><a href="https://ece.hkust.edu.hk/eeguan">Isabel Guan</a></span>
+							</a><sup>2</sup></span>
+		  		  		</center>
+		  		  	  </td>
+				<td align=center width=100px>
+	  					<center>
+	  						<span style="font-size:20px"><a href="https://scholar.google.com/citations?user=FCJVUYgAAAAJ&hl=zh-CN">Jianye Hao</a></span>
 							</a><sup>1</sup></span>
 		  		  		</center>
 		  		  	  </td>
+				<td align=center width=100px>
+	  					<center>
+	  						<span style="font-size:20px"><a href="http://www0.cs.ucl.ac.uk/staff/jun.wang/">Jun Wang</a></span>
+							</a><sup>1</sup></span>
+		  		  		</center>
+		  		  	  </td>
+				<td align=center width=100px>
+	  					<center>
+	  						<span style="font-size:20px"><a href="https://shaokun91.github.io/">Kun Shao</a></span>
+							</a><sup>1</sup></span>
+		  		  		</center>
+		  		  		</td>
 			  </table>
-          	<span style="font-size:20px"><sup>1</sup>CV Lab, Queen Mary University of London, <sup>2</sup>S-Lab, Nanyang Technological University</span><br>
-		  <span style="font-size:20px">{jian.hu, zixu.cheng, s.gong}@qmul.ac.uk, {chenyang.si, wei.l}@ntu.edu.sg</span>
+          	<span style="font-size:20px"><sup>1</sup>Queen Mary University of London, <sup>2</sup>Hong Kong University of Science and Technology, <sup>3</sup>Huawei Noah's Ark Lab, <sup>4</sup>University College London</span><br>
+		  <span style="font-size:20px">{jian.hu, zixu.cheng, s.gong}@qmul.ac.uk, {chenyang.si, wei.l}@ntu.edu.sg, jianye.hao@tju.edu.cn, jun.wang@cs.ucl.ac.uk, shaokun2@huawei.com</span>
           	<!-- <span style="font-size:22px">In CVPR, 2017.</span><br> -->
           		<!-- <span style="font-size:30px">ECCV 2016.</span> -->
 
@@ -173,12 +185,12 @@
 	  			  <tr>
 	  	              <td align=center width=300px>
 	  					<center>
-	  						<span style="font-size:20px"><a href='https://github.com/lwpyh/CoS_codes'> Code [GitHub]</a></span>
+	  						<span style="font-size:20px"><a href='https://github.com/lwpyh/URPO'> Code [GitHub]</a></span>
 		  		  		</center>
 		  		  	  </td>
 	  	              <td align=center width=300px>
 	  					<center>
-	  						<span style="font-size:20px"><a href='https://arxiv.org/abs/2502.06428'> ArXiV [Paper]</a></span>
+	  						<span style="font-size:20px"><a href='https://arxiv.org/abs/2508.06317'> ArXiV [Paper]</a></span>
 		  		  		</center>
 		  		  	  </td>
 			  </table>
@@ -211,7 +223,21 @@
  <center><h1>Abstract</h1></center>
 	<div align="justify">
 	<p>
-Multi-modal Large Language Models (MLLMs) struggle with long videos due to the need for excessive visual tokens. These tokens exceed massively the context length of MLLMs, resulting in filled by redundant task-irrelevant shots. How to select shots is an unsolved critical problem: sparse sampling risks missing key details, while exhaustive sampling overwhelms the model with irrelevant content, leading to video misunderstanding. To solve this problem, we propose \textbf{C}hain-\textbf{o}f-\textbf{S}hot prompting (\textbf{CoS}). The key idea is to frame shot selection as test-time visual prompt optimisation, choosing shots adaptive to video understanding semantic task by optimising shots-task alignment. CoS has two key parts: (1) a binary video summary mechanism that performs pseudo temporal grounding, discovering a binary coding to identify task-relevant shots, and (2) a video co-reasoning module that deploys the binary coding to pair (learning to align) task-relevant positive shots with irrelevant negative shots. It embeds the optimised shot selections into the original video, facilitating a focus on relevant context to optimize long video understanding. Experiments across three baselines and five datasets demonstrate the effectiveness of CoS.</p>
+Video Temporal Grounding (TG) aims to temporally locate video segments matching a natural language description (a query) in a long video. While Vision-Language Models (VLMs) are effective at holistic semantic
+matching, they often struggle with fine-grained temporal
+localisation. Recently, Group Relative Policy Optimisation (GRPO)
+reformulates the inference process as a reinforcement learning
+task, enabling fine-grained grounding and achieving strong in-domain
+performance. However, GRPO relies on labelled data, making it unsuitable in unlabelled domains. Moreover, because videos are large and expensive to store and process, performing full-scale adaptation introduces prohibitive latency and computational overhead, making it impractical for real-time deployment. To
+overcome both problems, we
+introduce a Data-Efficient Unlabelled Cross-domain Temporal Grounding
+method, from which a model is first trained on a labelled source domain, then adapted to a target domain using only a small number of {\em unlabelled videos from the target domain}. This approach eliminates the need for target annotation and keeps both computational and storage overhead low enough to run in real time. Specifically, we introduce
+\textbf{U}ncertainty-quantified \textbf{R}ollout \textbf{P}olicy
+\textbf{A}daptation (\textbf{URPA}) for cross-domain knowledge transfer in learning video temporal grounding without target labels. URPA generates multiple candidate predictions using
+GRPO rollouts, averages them to form a pseudo label, and estimates
+confidence from the variance across these rollouts. This confidence
+then weights the training rewards, guiding the model to focus on
+reliable supervision. Experiments on three datasets across six cross-domain settings show that URPA generalises well using only a few unlabelled target videos. </p>
 		</div>
 <br>
 <hr>
