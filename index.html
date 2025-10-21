@@ -145,7 +145,7 @@
 							</a><sup>1</sup></span>
 		  		  		</center>
 		  		  	  </td>
-	  	              <td align=center width=100px>
+	  	              <td align=center width=130px>
 	  					<center>
 	  						<span style="font-size:20px"><a href="https://www.eecs.qmul.ac.uk/~sgg/">Shaogang Gong</a></span>
 							</a><sup>1</sup></span>
@@ -203,7 +203,7 @@
   					<center>
   	                	<img class="rounded" src = "motivation_shown.png" height="320px"></img>
   	                	<br>
-						<figcaption>Motivation: (a) A comparison between full-data and data-efficient adaptation in Cross-domain Temporal Grounding (CTG). Existing methods adapt on thousands of unlabelled target videos (grey), which is slow and resource-heavy. We propose a data-efficient CTG setting using only 100 or 200 randomly selected target videos. Despite the limited data, our method matches or exceeds performance on the TaCoS $\rightarrow$ ActivityNet task.
+						<figcaption style="text-align: justify";> Motivation: (a) A comparison between full-data and data-efficient adaptation in Cross-domain Temporal Grounding (CTG). Existing methods adapt on thousands of unlabelled target videos (grey), which is slow and resource-heavy. We propose a data-efficient CTG setting using only 100 or 200 randomly selected target videos. Despite the limited data, our method matches or exceeds performance on the TaCoS $\rightarrow$ ActivityNet task.
    (b) Conceptual comparison between MC Dropout and GRPO rollout. MC Dropout samples subnetworks via stochastic neuron dropout and estimates uncertainty from output diversity. GRPO rollouts similarly sample diverse structural sequences from the policy. URPA leverages this property to generate averaged pseudo labels and estimate uncertainty via rollout standard deviation, enabling uncertainty-quantified adaptation without ground-truth labels.</figcaption>
 					</center>
   	              </td>
@@ -250,12 +250,21 @@ reliable supervision. Experiments on three datasets across six cross-domain sett
         <td width="400px">
             <center>
                 <figure>
-                    <img class="rounded" src="frame_CoS.png" height="260px" />
+                    <img class="rounded" src="framework_nips.png" height="260px" />
                     <figcaption style="text-align: justify;">
-                            The overall framework of CoS. Uncertainty-quantified Rollout Policy Adaptation (URPA): During source model training, we perform supervised GRPO training using labelled videos $V_s$. Specifically, the format reward \(R_{\text{format}})\ encourages the model to ``think first and then answer,'' while accuracy reward \(R_{\text{tiou}})\ aligns the predicted temporal grounding \(I_s^{\text{pred}})\ with the relaxed ground truth \(\ \tilde{I}_s^{\text{gt}})\ for supervised learning. 
-In target model knowledge adaptation, we adapt the model using K unlabelled target videos. For each video \(V_t)\, we first compute the average output over G rollouts to obtain a pseudo label \(\hat{I}_t^{\text{gt}}\). Then calculate the standard
-deviation across these rollouts and transform it into a confidence score \(c\) to quantify uncertainty on pseudo labels, which is then used to weight different pseudo-labels when constructing a weighted reward function for test-time target model adaptation.
-</figcaption>
+                            Uncertainty-quantified Rollout Policy Adaptation (URPA):</b>
+During source model training, we perform supervised GRPO training using labelled videos \( V_s \).
+Specifically, the format reward \( R_{\text{format}} \) encourages the model to “think first and then answer,”
+while the accuracy reward \( R_{\text{tiou}} \) aligns the predicted temporal grounding 
+\( I_s^{\text{pred}} \) with the relaxed ground truth \( \tilde{I}_s^{\text{gt}} \)
+for supervised learning.
+In target model knowledge adaptation, we adapt the model using \( K \) unlabelled target videos.
+For each video \( V_t \), we first compute the average output over \( G \) rollouts
+to obtain a pseudo label \( \hat{I}_t^{\text{gt}} \).
+Then, we calculate the standard deviation across these rollouts and transform it into
+a confidence score \( c \) to quantify uncertainty on pseudo labels,
+which is then used to weight different pseudo-labels when constructing a weighted reward function
+for test-time target model adaptation.</figcaption>
                 </figure>
         <td width="400px">
         </td>
@@ -287,8 +296,9 @@ deviation across these rollouts and transform it into a confidence score \(c\) t
   			  <tr>
   	              <td width=400px>
   					<center>
-  	                	<img class="rounded" src = "image_sample.png" height="500px"></img>
+  	                	<img class="rounded" src = "vis_nips.png" height="500px"></img>
   	                	<br>
+						<figcaption style="text-align: justify";> Qualitative Analysis on Charades → ActivityNet.</figcaption>
 					</center>
   	              </td>
                 </tr>
