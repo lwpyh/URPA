@@ -139,19 +139,19 @@
 							</a><sup>1</sup></span>
 		  		  		</center>
 		  		  	  </td>
-	  	              <td align=center width=120px>
+	  	              <td align=center width=100px>
 	  					<center>
 	  						<span style="font-size:20px"><a href="https://zxccade.github.io/">Zixu Cheng</a></span>
 							</a><sup>1</sup></span>
 		  		  		</center>
 		  		  	  </td>
-	  	              <td align=center width=120px>
+	  	              <td align=center width=100px>
 	  					<center>
 	  						<span style="font-size:20px"><a href="https://www.eecs.qmul.ac.uk/~sgg/">Shaogang Gong</a></span>
 							</a><sup>1</sup></span>
 		  		  		</center>
 		  		  	  </td>
-				<td align=center width=110px>
+				<td align=center width=100px>
 	  					<center>
 	  						<span style="font-size:20px"><a href="https://ece.hkust.edu.hk/eeguan">Isabel Guan</a></span>
 							</a><sup>2</sup></span>
@@ -201,14 +201,10 @@
   			  <tr>
   	              <td width=400px>
   					<center>
-  	                	<img class="rounded" src = "motivation_show.png" height="320px"></img>
+  	                	<img class="rounded" src = "motivation_shown.png" height="320px"></img>
   	                	<br>
-						<figcaption>Motivation: The critical problem of how to select shots in video understanding. 
-   In a video that depicts how a boy gradually gains a dragon's trust,
-   different sampling methods create two distinct narratives: split
-   video A shows the boy being attacked by the dragon, while split
-   video B shows him happily sharing food with the dragon. 
-  This shows that minor differences in video sampling leads to significant variations in semantic understanding.</figcaption>
+						<figcaption>Motivation: (a) A comparison between full-data and data-efficient adaptation in Cross-domain Temporal Grounding (CTG). Existing methods adapt on thousands of unlabelled target videos (grey), which is slow and resource-heavy. We propose a data-efficient CTG setting using only 100 or 200 randomly selected target videos. Despite the limited data, our method matches or exceeds performance on the TaCoS $\rightarrow$ ActivityNet task.
+   (b) Conceptual comparison between MC Dropout and GRPO rollout. MC Dropout samples subnetworks via stochastic neuron dropout and estimates uncertainty from output diversity. GRPO rollouts similarly sample diverse structural sequences from the policy. URPA leverages this property to generate averaged pseudo labels and estimate uncertainty via rollout standard deviation, enabling uncertainty-quantified adaptation without ground-truth labels.</figcaption>
 					</center>
   	              </td>
                 </tr>
@@ -231,9 +227,9 @@ task, enabling fine-grained grounding and achieving strong in-domain
 performance. However, GRPO relies on labelled data, making it unsuitable in unlabelled domains. Moreover, because videos are large and expensive to store and process, performing full-scale adaptation introduces prohibitive latency and computational overhead, making it impractical for real-time deployment. To
 overcome both problems, we
 introduce a Data-Efficient Unlabelled Cross-domain Temporal Grounding
-method, from which a model is first trained on a labelled source domain, then adapted to a target domain using only a small number of {\em unlabelled videos from the target domain}. This approach eliminates the need for target annotation and keeps both computational and storage overhead low enough to run in real time. Specifically, we introduce
-\textbf{U}ncertainty-quantified \textbf{R}ollout \textbf{P}olicy
-\textbf{A}daptation (\textbf{URPA}) for cross-domain knowledge transfer in learning video temporal grounding without target labels. URPA generates multiple candidate predictions using
+method, from which a model is first trained on a labelled source domain, then adapted to a target domain using only a small number of unlabelled videos from the target domain. This approach eliminates the need for target annotation and keeps both computational and storage overhead low enough to run in real time. Specifically, we introduce
+Uncertainty-quantified Rollout Policy
+Adaptation (URPA) for cross-domain knowledge transfer in learning video temporal grounding without target labels. URPA generates multiple candidate predictions using
 GRPO rollouts, averages them to form a pseudo label, and estimates
 confidence from the variance across these rollouts. This confidence
 then weights the training rewards, guiding the model to focus on
@@ -256,19 +252,9 @@ reliable supervision. Experiments on three datasets across six cross-domain sett
                 <figure>
                     <img class="rounded" src="frame_CoS.png" height="260px" />
                     <figcaption style="text-align: justify;">
-                            The overall framework of CoS. It first utilises LLaVA to
-                            perform a mosaicing binary coding to bootstrap video
-                            summarisation for temporal grounding on a long video. Specifically, every
-                            four shots are aggregated into a mosaicing composition image. LLaVA
-                            determines whether task-related elements exist within each
-                            composition image by encoding a binary value of 1 or 0 (<code>'yes'</code>
-                            or <code>'no'</code>),
-                            thereby identifying sparsely distributed task-related shots to
-                            achieve pseudo temporal grounding. Given this binary video
-                            summary, task-related positive shots  \( S^p \) and irrelevant negative shots \( S^n \)
-                            are generated and represented by binary codes. \( S^p \), \( S^n \) and the original frame sequence \( X \)
-                            sampled from original video \( V \) are then fed into the MLLM for co-reasoning,
-                            minimising interference of irrelevant video content.
+                            The overall framework of CoS. Uncertainty-quantified Rollout Policy Adaptation (URPA): During source model training, we perform supervised GRPO training using labelled videos $V_s$. Specifically, the format reward \(R_{\text{format}})\ encourages the model to ``think first and then answer,'' while accuracy reward \(R_{\text{tiou}})\ aligns the predicted temporal grounding \(I_s^{\text{pred}})\ with the relaxed ground truth \(\ \tilde{I}_s^{\text{gt}})\ for supervised learning. 
+In target model knowledge adaptation, we adapt the model using K unlabelled target videos. For each video \(V_t)\, we first compute the average output over G rollouts to obtain a pseudo label \(\hat{I}_t^{\text{gt}}\). Then calculate the standard
+deviation across these rollouts and transform it into a confidence score \(c\) to quantify uncertainty on pseudo labels, which is then used to weight different pseudo-labels when constructing a weighted reward function for test-time target model adaptation.
 </figcaption>
                 </figure>
         <td width="400px">
